@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "/Users/iriga/.dotnet/store/|arch|/|tfm|",
+      "/Users/iriga/.nuget/packages"
+    ]
+  }
+}
