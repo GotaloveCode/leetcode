@@ -6,8 +6,8 @@ namespace MyConsole
     {
         // https://leetcode.com/problems/binary-tree-right-side-view/
         
-        public IList<int> RightSideView(TreeNode root) {
-        
-        }
+        // public IList<int> RightSideView(TreeNode root) {
+        //
+        // }
     }
 }
