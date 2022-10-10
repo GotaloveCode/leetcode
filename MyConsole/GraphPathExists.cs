@@ -22,7 +22,7 @@ namespace MyConsole
 
             if (HasPath(source, destination))
                 return true;
-            
+
             return false;
         }
 
@@ -71,6 +71,43 @@ namespace MyConsole
                     }
                 }
             }
+        }
+
+
+        //solution 2
+        public bool ValidPath2(int n, int[][] edges, int source, int destination)
+        {
+            visited = new bool[n].ToList();
+
+            graph = CreateAdjacencyLists(n, edges);
+
+            var set = new HashSet<int>();
+
+            return Dfs2(graph, source, destination, set);
+        }
+
+        bool Dfs2(List<List<int>> graph, int node, int dest, HashSet<int> set)
+        {
+            if (node == dest)
+            {
+                return true;
+            }
+
+            if (set.Contains(node))
+            {
+                return false;
+            }
+
+            set.Add(node);
+            foreach (int neighbour in graph[node])
+            {
+                if (Dfs2(graph, neighbour, dest, set))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
