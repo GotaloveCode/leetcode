@@ -2,97 +2,71 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace MyConsole
 {
+    
+    // 417. Pacific Atlantic Water Flow
+    // Input: heights = [[1,2,2,3,5],[3,2,3,4,4],[2,4,5,3,1],[6,7,1,4,5],[5,1,1,2,4]]
+    // https://leetcode.com/problems/pacific-atlantic-water-flow/submissions/819544738/
     public class PacificAtlantics
     {
-        private int rowBound;
-        private int colBound;
-        private int rowIndex;
-        private int colIndex;
-        HashSet<String> pacificVerticex = new HashSet<string>();
-        HashSet<String> atlanticsVerticex = new HashSet<string>();
-        HashSet<String> oceans = new HashSet<string>();
-        private IList<IList<int>> results = new List<IList<int>>();
+        private int ROWS;
+        private int COLS;
+        private int[][] heightsMatrix;
 
         public IList<IList<int>> PacificAtlantic(int[][] heights)
         {
-            //list of vertices atlantic
-            // list of vertices on pacific
-            //check you are in bounds of matrix
-            // dfs 
-            //return if val > current
-            // Input: heights = [[1,2,2,3,5],[3,2,3,4,4],[2,4,5,3,1],[6,7,1,4,5],[5,1,1,2,4]]
+            heightsMatrix = heights;
+            ROWS = heights.Length;
+            COLS = heights[0].Length;
+            var pac = new HashSet<string>();
+            var atl = new HashSet<string>();
+            var res = new List<IList<int>>();
 
-            // pacific // 0,0 ... 0 ,Maxcol
-            bool isPacific = false;
-            bool isAtlantic = false;
-            rowBound = heights.Length - 1;
-            colBound = heights[0].Length - 1;
-
-
-            //populate pacifics vertics 
-            string key = "";
-            for (int col = 0; col <= colBound; col++)
+            for (int col = 0; col < COLS; col++)
             {
-                key = "0," + col; // '0,0' ,'0,1','0,2'
-                pacificVerticex.Add(key);
+                //pacific - all in top row of matrix
+                Dfs(0, col, pac, heights[0][col]);
+                // Atlantic - all in bottom row of matrix
+                Dfs(ROWS - 1, col, atl, heights[ROWS - 1][col]);
             }
 
-            for (int row = 0; row <= rowBound; row++)
+            for (int row = 0; row < ROWS; row++)
             {
-                key = row + ",0"; // 00,10,20,
-                pacificVerticex.Add(key);
+                //pacific - all in 1st column
+                Dfs(row, 0, pac, heights[row][0]);
+                //atlantic - all in last column
+                Dfs(row, COLS - 1, atl, heights[row][COLS - 1]);
             }
 
-            //populate atlantics vertics 
-            for (int col = 0; col <= colBound; col++)
+            for (int row = 0; row < ROWS; row++)
             {
-                key = rowBound + "," + col; // '5,0','5,1','5,2'
-                atlanticsVerticex.Add(key);
+                for (int col = 0; col < COLS; col++)
+                {
+                    if (pac.Contains($"{row},{col}") && atl.Contains($"{row},{col}"))
+                    {
+                        res.Add(new List<int> {row, col});
+                    }
+                }
             }
 
-            for (int row = 0; row <= rowBound; row++)
-            {
-                key = row + "," + colBound; // '05',10,20,
-                atlanticsVerticex.Add(key);
-            }
-            
-            Dfs(0, 0, heights[0][0], heights);
-            // add to results
-            List<int> tempList = new List<int>();
-            if (oceans.Count() == 2)
-            {
-                tempList.Add(heights[rowIndex][colIndex]);
-            }
-            results.Add(tempList);
-   
-            return results;
+            return res;
         }
 
-        void Dfs(int row, int col, int last_value, int[][] heights)
+        void Dfs(int row, int col, HashSet<string> visit, int prevHeight)
         {
-            rowIndex = row;
-            colIndex = col;
-            if ((row > rowBound) || col > colBound)
+            //starting from ocean so height > upward
+            if (visit.Contains($"{row},{col}")
+                || row < 0 || col < 0 || row == ROWS || col == COLS
+                || heightsMatrix[row][col] < prevHeight)
                 return;
-            if (last_value > heights[row][col])
-                return;
-            string key = row + "," + col;
-            if (pacificVerticex.Contains(key))
-            {
-                oceans.Add("p");
-            }
+            visit.Add($"{row},{col}");
 
-            if (atlanticsVerticex.Contains(key))
-            {
-                oceans.Add("a");
-            }
-
-            Dfs(row + 1, col, heights[row][col], heights);
-            Dfs(row - 1, col, heights[row][col], heights);
-            Dfs(row, col + 1, heights[row][col], heights);
-            Dfs(row, col - 1, heights[row][col], heights);
+            Dfs(row + 1, col, visit, heightsMatrix[row][col]);
+            Dfs(row - 1, col, visit, heightsMatrix[row][col]);
+            Dfs(row, col + 1, visit, heightsMatrix[row][col]);
+            Dfs(row, col - 1, visit, heightsMatrix[row][col]);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.Design;
 
 namespace MyConsole
 {
@@ -11,12 +10,6 @@ namespace MyConsole
             // Console.WriteLine(Caterpillar.Solution(new int[]{-5, -5, -1, 0, 3, 6}));
             // Console.WriteLine(Caterpillar.Solution(new int[]{ Int32.MinValue,1}));
             // Console.WriteLine(reversingWithSpecial());
-            GraphPathExists g = new GraphPathExists();
-            var n = 3;
-            int [ , ] edges = { {0, 1}, {1, 2}, {2, 0} };
-            var source = 0;
-            var destination = 2;
-            Console.WriteLine(g.ValidPath(n,edges,source,destination));
         }
 
         public static string reversingWithSpecial()
