@@ -10,6 +10,20 @@ namespace MyConsole
             // Console.WriteLine(Caterpillar.Solution(new int[]{-5, -5, -1, 0, 3, 6}));
             // Console.WriteLine(Caterpillar.Solution(new int[]{ Int32.MinValue,1}));
             // Console.WriteLine(reversingWithSpecial());
+            // runGraphPathExists();
+            Graph.DfsRun();
+
+        }
+
+        static void runGraphPathExists()
+        {
+            var edges = new int[3][] {new []{0, 1}, new []{1, 2}, new []{2, 0}};
+            GraphPathExists g = new GraphPathExists();
+            bool isValid = g.ValidPath(3, edges, 0, 2);
+            if (isValid)
+            {
+                Console.WriteLine("GraphPathExists has a ValidPath for source 0 and destination 2");
+            }
         }
 
         public static string reversingWithSpecial()

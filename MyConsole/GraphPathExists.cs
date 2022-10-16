@@ -86,24 +86,57 @@ namespace MyConsole
             return Dfs2(graph, source, destination, set);
         }
 
-        bool Dfs2(List<List<int>> graph, int node, int dest, HashSet<int> set)
+        bool Dfs2(List<List<int>> graph, int node, int dest, HashSet<int> visited)
         {
-            if (node == dest)
-            {
-                return true;
-            }
+            if (node == dest) return true;
+            if (visited.Contains(node)) return false;
 
-            if (set.Contains(node))
-            {
-                return false;
-            }
+            visited.Add(node);
 
-            set.Add(node);
             foreach (int neighbour in graph[node])
             {
-                if (Dfs2(graph, neighbour, dest, set))
+                if (Dfs2(graph, neighbour, dest, visited))
                 {
                     return true;
+                }
+            }
+
+            return false;
+        }
+
+        //solution 3
+        public bool ValidPath3(int n, int[][] edges, int source, int destination)
+        {
+            //create adjacency list
+            var adj = CreateAdjacencyLists(n, edges);
+
+            //bfs
+            return hasPathBfs(adj, source, destination, new HashSet<int>());
+        }
+
+        bool hasPathBfs(List<List<int>> graph, int source, int destination, HashSet<int> visited)
+        {
+            if (source == destination) return true;
+            if (visited.Contains(source)) return false;
+
+            visited.Add(source);
+
+            var queue = new Queue<int>();
+            queue.Enqueue(source);
+
+            while (queue.Count > 0)
+            {
+                var current = queue.Dequeue();
+                if (current == destination) return true;
+                //Add to visited the dequeued element before visiting its neighbors
+                visited.Add(current);
+
+                foreach (var neighbor in graph[current])
+                {
+                    if (!visited.Contains(neighbor))
+                    {
+                        queue.Enqueue(neighbor);
+                    }
                 }
             }
 
