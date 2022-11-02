@@ -11,8 +11,9 @@ namespace MyConsole
             // Console.WriteLine(Caterpillar.Solution(new int[]{ Int32.MinValue,1}));
             // Console.WriteLine(reversingWithSpecial());
             // runGraphPathExists();
-            Graph.DfsRun();
-
+            // Graph.DfsRun();
+            var o = new OrderCourses();
+            o.Execute();
         }
 
         static void runGraphPathExists()
