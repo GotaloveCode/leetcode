@@ -9,12 +9,12 @@ namespace MyConsole
         public int[] FindOrder(int numCourses, int[][] prerequisites)
         {
             //create adj list
-            var adj = CreateGraph(numCourses, prerequisites);
+            var graph = CreateGraph(numCourses, prerequisites);
             // initialize connected nodes count
             var nodes= new int[numCourses];
             for(var i = 0; i < numCourses; i++){
-                foreach(var n in adj[i]){
-                    nodes[n]++; //increase incoming edges
+                foreach(var neighbor in graph[i]){
+                    nodes[neighbor]++; //increase incoming edges
                 }
             }
 
@@ -30,12 +30,12 @@ namespace MyConsole
 
             while (q.Count > 0)
             {
-                int node = q.Dequeue();
+                var node = q.Dequeue();
                 results.Add(node);
-                foreach(int n in adj[node]){
-                    nodes[n]--; //decrease incoming edges
-                    if (nodes[n] == 0) 
-                        q.Enqueue(n);
+                foreach(var neighbor in graph[node]){
+                    nodes[neighbor]--; //decrease incoming edges
+                    if (nodes[neighbor] == 0) 
+                        q.Enqueue(neighbor);
                 }
             }
 
