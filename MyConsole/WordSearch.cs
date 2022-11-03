@@ -9,48 +9,50 @@ namespace MyConsole
         public bool Exist(char[][] board, string word)
         {
             _word = word;
-            var index = CountWords(board, 0, 0, 0);
-            Console.WriteLine("last word char:" + (_word.Length - 1));
-            Console.WriteLine("our index:" + index);
-            return (index == (word.Length - 1));
+            var rows = board.Length;
+            var cols = board[0].Length;
+            var visited = new bool[rows][];
+            for (int i = 0; i < rows; i++)
+            {
+                visited[i] = new bool[cols];
+            }
+            for(var r = 0; r < rows; r++){
+                for(var c = 0; c < cols; c++){
+                    if(board[r][c] == word[0]){ // find first char in word
+                        var isFound = Dfs(board, r, c, 0, visited);    // call DFS or recursion
+                        if(isFound){ return true; }
+                    }
+                }
+            }
+
+            return false;
         }
 
-        private int CountWords(char[][] board, int i, int j, int index)
+        private bool Dfs(char[][] board, int row, int col, int wordIndex, bool[][] visited)
         {
-            if (i >= board.Length || i < 0 || j >= board[0].Length || j < 0
-                || board[i][j] == '.' || index == _word.Length - 1)
-            {
-                //mark as traversed
-                // board[i][j] = '.';
-                Console.WriteLine(_word[index] + " index:" + index);
-                return index;
-            }
+            if (row >= board.Length || row < 0 || col >= board[0].Length || col < 0
+                || board[row][col] != _word[wordIndex] || visited[row][col])
+                return false;
 
-            //check if matches current character
-            if (board[i][j] == _word[index])
-            {
-                // if (index == _word.Length - 1)
-                // {
-                //     //mark as traversed
-                //     // board[i][j] = '.';
-                //     Console.WriteLine(_word[index] + " index:" + index);
-                //     return index;
-                // }
+            if (wordIndex == _word.Length - 1)
+                return true;
 
-                index++;
-            }
-
-            var temp = board[i][j];
-            //mark as traversed
-            board[i][j] = '.';
-
-            index = CountWords(board, i + 1, j, index);
-            index = CountWords(board, i - 1, j, index);
-            index = CountWords(board, i, j + 1, index);
-            index = CountWords(board, i, j - 1, index);
-
-            Console.WriteLine("end:" + _word[index] + " index:" + index + " board:" + temp + " i: " + i + " j: " + j);
-            return index;
+            //mark traversed
+            visited[row][col] = true;
+ 
+            if (Dfs(board, row + 1, col, wordIndex + 1, visited))
+                return true;
+            if (Dfs(board, row - 1, col, wordIndex + 1,visited))
+                return true;
+            if (Dfs(board, row, col + 1, wordIndex + 1,visited))
+                return true;
+            if (Dfs(board, row, col - 1, wordIndex + 1,visited))
+                return true;
+            
+            //if we get here set not traversed no char found
+            visited[row][col] = false;
+            
+            return false;
         }
 
         public void Execute()
@@ -62,7 +64,7 @@ namespace MyConsole
                 new[] {'A', 'D', 'E', 'E'}
             };
 
-            var word = "ABCB";
+            var word = "ABCCED";
 
             Console.WriteLine(Exist(board, word));
         }
