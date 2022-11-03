@@ -12,8 +12,10 @@ namespace MyConsole
             // Console.WriteLine(reversingWithSpecial());
             // runGraphPathExists();
             // Graph.DfsRun();
-            var o = new OrderCourses();
-            o.Execute();
+            // var o = new OrderCourses();
+            // o.Execute();
+            var ws = new WordSearch();
+            ws.Execute();
         }
 
         static void runGraphPathExists()
