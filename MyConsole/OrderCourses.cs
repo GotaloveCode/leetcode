@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace MyConsole
 {
     // https://leetcode.com/problems/course-schedule-ii/submissions/834721820/
+    // topological sort - key is to draw graph for visualization
     public class OrderCourses
     {
         public int[] FindOrder(int numCourses, int[][] prerequisites)
@@ -48,6 +49,7 @@ namespace MyConsole
             for (var row = 0; row < n; row++)
             {
                 adj[row] = new List<int>();
+                Console.WriteLine(adj[row]);
             }
             
             foreach(int[] edge in edges)

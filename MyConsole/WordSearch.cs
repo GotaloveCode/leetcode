@@ -2,6 +2,8 @@ using System;
 
 namespace MyConsole
 {
+    // https://leetcode.com/problems/word-search/submissions/841810036/
+    // https://leetcode.com/problems/word-search/submissions/836132779/
     public class WordSearch
     {
         private string _word;
@@ -12,9 +14,9 @@ namespace MyConsole
             var rows = board.Length;
             var cols = board[0].Length;
             var visited = new bool[rows][];
-            for (int i = 0; i < rows; i++)
+            for (var r = 0; r < rows; r++)
             {
-                visited[i] = new bool[cols];
+                visited[r] = new bool[cols];
             }
             for(var r = 0; r < rows; r++){
                 for(var c = 0; c < cols; c++){
