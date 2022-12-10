@@ -6,21 +6,30 @@ namespace MyConsole
     {
         static void Main(string[] args)
         {
+            var p = new SkillTree();
+            var q = p.Solution2(new int[] {0, 0, 0, 0, 2, 3, 3}, new int[] {2, 5, 6});
+            Console.WriteLine($"{q}");
             // Console.WriteLine(solution(new int[]{-5, -3, -1, 0, 3, 6}));
             // Console.WriteLine(Caterpillar.Solution(new int[]{-5, -5, -1, 0, 3, 6}));
             // Console.WriteLine(Caterpillar.Solution(new int[]{ Int32.MinValue,1}));
             // Console.WriteLine(reversingWithSpecial());
             // runGraphPathExists();
             // Graph.DfsRun();
-            var o = new OrderCourses();
-            o.Execute();
+            // var s = new LongestPalindromicString();
+            // var p = s.LongestPalindrome("babad");
+            // var q = s.LongestPalindrome("cbbd");
+            // Console.WriteLine("string: babad");
+            // Console.WriteLine($"substring: {p}");   
+            // Console.WriteLine("string: cbbd");
+            // Console.WriteLine($"substring: {q}");
+
             // var ws = new WordSearch();
             // ws.Execute();
         }
 
         static void runGraphPathExists()
         {
-            var edges = new int[3][] {new []{0, 1}, new []{1, 2}, new []{2, 0}};
+            var edges = new int[3][] {new[] {0, 1}, new[] {1, 2}, new[] {2, 0}};
             GraphPathExists g = new GraphPathExists();
             bool isValid = g.ValidPath(3, edges, 0, 2);
             if (isValid)

@@ -2,17 +2,15 @@ using System;
 
 namespace MyConsole
 {
+    // https://leetcode.com/problems/house-robber/submissions/857522177/
     public class DynamicRobber
     {
         public int Rob(int[] nums)
         {
             int N = nums.Length;
-            if (N == 0)
-                return 0;
-            if (N == 1)
-                return nums[0];
-            if (N == 2)
-                return Math.Max(nums[0], nums[1]);
+            if (N == 0) return 0;
+            if (N == 1) return nums[0];
+            if (N == 2) return Math.Max(nums[0], nums[1]);
             int[] dp = new int[N];
             dp[0] = nums[0];
             dp[1] = nums[1];
