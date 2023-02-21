@@ -5,18 +5,13 @@ namespace MyConsole
 {
     public class TL
     {
-    }
-
-    public class Solution
-    {
         public IList<IList<int>> LevelOrder(TreeNode root)
         {
             var results = new List<IList<int>>();
             var q = new Queue<List<KeyValuePair<TreeNode, int>>>();
             if (root == null)
                 return results;
-            var item = new List<KeyValuePair<TreeNode, int>>();
-            item.Add(new KeyValuePair<TreeNode, int>(root, 0));
+            var item = new List<KeyValuePair<TreeNode, int>> {new KeyValuePair<TreeNode, int>(root, 0)};
             q.Enqueue(item); //[root,0]
             int previousLevel = 0;
             var lst = new List<int>();
